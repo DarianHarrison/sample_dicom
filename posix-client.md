@@ -1,9 +1,4 @@
-
-
-
-
-
-on cldb node, get some data:
+1) on the HPECP controller host, lets gather some data:
 ```
 hostname -i
 bdmapr cat /opt/mapr/MapRBuildVersion
@@ -18,8 +13,7 @@ m2-ess-vm76.mip.storage.hpecorp.net  m2-ess-vm76.mip.storage.hpecorp.net:5181
 
 
 
-on cliente machine:
-
+2) on any cliente machine (non-hpecp) install mapr packages:
 vi /etc/yum.repos.d/mapr_core.repo
 ```
 [MapR_Core]
@@ -45,8 +39,7 @@ yum install -y mapr-posix-client-basic --nogpgcheck
 rpm -qa | grep mapr
 ```
 
-back on client:
-create and set mount point
+3)on the client machine, lets create and ensure that the mountpoint is the same directory on config file
 ```
 mkdir /mapr
 vi /opt/mapr/conf/fuse.conf
@@ -54,26 +47,25 @@ vi /opt/mapr/conf/fuse.conf
 fuse.mount.point=/mapr
 
 
-configure service ticket:
+4) configure service ticket:
 
-on cldb node
+On the HPE Controller node controller node
 ```
 bdmapr --root bash
 scp /opt/mapr/conf/hcp-service-ticket <client-user>@<client-ip>:<client-dir>
 ```
 
 
-con client node:
+back on con client node:
 ```
 cp hcp-service-ticket /opt/mapr/conf/
 ```
-
 vi /opt/mapr/conf/fuse.conf
 ```
 fuse.ticketfile.location=/opt/mapr/conf/hcp-service-ticket
 ```
 
-
+5) on client machine
 Run configure.sh to set this node as the client node.
 ```
 /opt/mapr/server/configure.sh -N hcp.mapr.cluster -C m2-ess-vm76.mip.storage.hpecorp.net:7222 -Z m2-ess-vm76.mip.storage.hpecorp.net:5181 -c
@@ -81,13 +73,12 @@ Run configure.sh to set this node as the client node.
 
 had to change secure=true,
 note: if fqdn does not work, use ip
-
 vi /opt/mapr/conf/mapr-clusters.conf
 ```
 hcp.mapr.cluster secure=true 10.163.168.131:7222
 ```
 
-start service
+on cient machine, start service, make sure it is running
 ```
 systemctl stop mapr-posix-client-basic
 systemctl start mapr-posix-client-basic
@@ -106,7 +97,7 @@ cd /mapr/hcp.mapr.cluster
 touch abc.txt
 ```
 
-on datafabric
+On HPE CP data fabric
 ```
 bdmapr -root bash
 [root@m2-ess-vm76 hcp.mapr.cluster]# pwd
