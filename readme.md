@@ -1,3 +1,8 @@
+sanity test
+```
+pip3 --version
+python3 --version
+```
 install packaging
 ```
 python3 -m pip install --upgrade pip
