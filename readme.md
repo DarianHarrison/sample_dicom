@@ -6,9 +6,13 @@
 * b) log into notebook:
 * c) select python notebook:
 
-![Alt text](docs/0launch.png "launch.png")
+![Alt text](docs/0launch.png "launch")
+
 
 0. sanity test
+
+![Alt text](docs/1deploy_notebook.png "1deploy_notebook")
+
 ```
 !pip3 --version
 !python3 --version
@@ -84,13 +88,21 @@ bash-4.2$ ls -l /bd-fs-mnt/TenantShare/dicom-data/test_files/
 ![Alt text](docs/6tenantshare2.png "6tenantshare2")
 ![Alt text](docs/6tenantshare3.png "6tenantshare3")
 
-## 2. Install and Configure Notebooks Environment with PyDicom and Sample Data
+## 2. Import/Export data to/from orthanc container. 
 
+note: Future implementation may connect directly to the dataFabric with K8s rerouce definitions and exposed services
+
+
+1. on 1 termnial, run a sample dicom container provided by Catharina
+```
 docker run -p 4242:4242 -p 8042:8042 --rm jodogne/orthanc /etc/orthanc --verbose
-
-/exthcp/tenant-66/fsmount
-
-
-
+```
+on browser go to <ip>:8042
+user: orthanc pass: orthanc
 
 
+on another terminal, copy files from tenant share to dicom container
+```
+cd /opt/bluedata/mapr/mnt/picasso/exthcp/tenant-30/fsmount/
+
+```
