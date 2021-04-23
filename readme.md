@@ -47,7 +47,7 @@ note2: site packages will be stored in site-packages, i.e:
 
 ![Alt text](docs/3sample_downloads.png "3sample_downloads")
 
-![Alt text](docs/4directory "4directory.png")
+![Alt text](docs/4directory.png "4directory.png")
 
 4. add sample code to read from the recently downloaded data and plot the data
 ```
@@ -59,7 +59,7 @@ plt.imshow(ds.pixel_array, cmap=plt.cm.bone)
 plt.show()
 ```
 
-![Alt text](docs/5plot "5plot.png")
+![Alt text](docs/5plot.png "5plot.png")
 
 
 docker run -p 4242:4242 -p 8042:8042 --rm jodogne/orthanc /etc/orthanc --verbose
